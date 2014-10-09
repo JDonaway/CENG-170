@@ -1,13 +1,14 @@
-/*This program plays TicTacToe
+/*This program is a console based TicTacToe game
 by Josh Donaway and Adam Campbell
 */
 
-
 #include <iostream>
-#include <ctime> // For time function
+#include <ctime>  		// For time function
 using namespace std;
 const int BOARD_SIZE = 9;
 
+/*This function receives a character array, prints the contents
+ of the array in a defined format, and returns nothing.*/
 void DisplayBoard(const char board[])
 {
 	cout << endl;
@@ -19,11 +20,14 @@ void DisplayBoard(const char board[])
 	cout << endl;
 }
 
+/*This function receives a character array, asks the user for
+a valid move, changes the board array to reflect that move,
+and returns nothing.*/
 void GetUserMove(char board[]) // Gets user's move
 {
 	int move,
 		 error = 0;
-	do 
+	do
 	{
 		cout << "Enter your move: ";
 		cin >> move;
@@ -49,6 +53,9 @@ void GetUserMove(char board[]) // Gets user's move
 	} while (error);
 }
 
+/*This function receives a character array, checks for every
+possible winning combination, and returns an integer which
+reflects the winning player, a tie, or no win at all.*/
 int CheckForWinner(const char board[])
 {
 	int returnValue = 1;
@@ -98,11 +105,15 @@ int CheckForWinner(const char board[])
 	return returnValue;
 }
 
+/*This function receives a character array, generates
+an "intelligent" move based on the contents of that array,
+changes the board array to reflect that move, and returns nothing.*/
 void GetComputerMove(char board[])
 {
-	int computer_move; // Get a random number between 0 and 8
-	int error = 0;
-	int temp;
+	int computer_move,
+			error = 0,
+			temp;
+
 	bool change = false;
 
 
@@ -173,6 +184,8 @@ void GetComputerMove(char board[])
 	}
 }
 
+/*This is the main function which controls the flow of the game.
+This function returns nothing.*/
 void main()
 {
 	char board[BOARD_SIZE] = { '0', '1', '2', '3', '4', '5', '6', '7', '8' };
