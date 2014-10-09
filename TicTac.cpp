@@ -22,7 +22,7 @@ void DisplayBoard(const char board[])
 void GetUserMove(char board[]) // Gets user's move
 {
 	int move,
-		error = 0;
+		 error = 0;
 	do 
 	{
 		cout << "Enter your move: ";
@@ -98,7 +98,6 @@ int CheckForWinner(const char board[])
 	return returnValue;
 }
 
-
 void GetComputerMove(char board[])
 {
 	int computer_move; // Get a random number between 0 and 8
@@ -145,6 +144,7 @@ void GetComputerMove(char board[])
 			}
 		}
 	}
+
 	if (change == false)
 	{
 		do
