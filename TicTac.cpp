@@ -116,7 +116,7 @@ void GetComputerMove(char board[])
 
 	bool change = false;
 
-
+	//Check for winning move
 	for (int i = 0; i < 9; i++)
 	{
 		if (board[i] != 'X' && board[i] != 'O' && change == false)
@@ -135,6 +135,7 @@ void GetComputerMove(char board[])
 		}
 	}
 
+	//Check for blocking move
 	if (change == false)
 	{
 		for (int i = 0; i < 9; i++)
@@ -156,6 +157,7 @@ void GetComputerMove(char board[])
 		}
 	}
 
+	//Select random move
 	if (change == false)
 	{
 		do
