@@ -7,14 +7,12 @@
 #include <fstream>
 using namespace std;
 
-
 // Parse a line that looks like this:
 // "Bruce McLarty|M|6'0"|999|Losing his Bible,Missing class,Unpaid parking tickets"
 // and output the appropriate HTML to fout.
-void PrintCriminal(ofstream &fout, string line)
+void FindName(ofstream &fout, string &line)
 {
 	int barLocation = line.find("|");
-	int comma;
 	int space;
 	string name = line.substr(0, barLocation);
 	string photoName = name;
@@ -23,62 +21,73 @@ void PrintCriminal(ofstream &fout, string line)
 	photoName.erase(space, 1);
 	photoName += ".jpg";
 	fout << "<img src = \"" << photoName << "\" width = \"120\" height = \"150\">" << endl;
-
 	fout << "<p>Name: <b>" << name << "</b>\n";
 
-	//erase name
-	line.erase(0, barLocation + 1);
+	line.erase(0, barLocation + 1); //erase name
+}
 
-	//get gender
+void FindGender(ofstream &fout, string &line)
+{
 	string gender = line.substr(0, 1);
+	int barLocation = line.find("|");
 
 	if (gender == "M")
-	{
 		fout << "<br>Gender: <b>Male</b>\n";
-	}
 	else
-	{
 		fout << "<br>Gender: <b>Female</b>\n";
-	}
 
-	barLocation = line.find("|");
+	line.erase(0, barLocation + 1); // erase gender
+}
 
-	//erase gender
-	line.erase(0, barLocation + 1);
-
-	barLocation = line.find("|");
+void FindHeight(ofstream &fout, string &line)
+{
+	int barLocation = line.find("|"); // Find height
 	string height = line.substr(0, barLocation);
+
 	fout << "<br>Height: <b>" << height << "</b>\n";
 
-	//erase height
-	line.erase(0, barLocation + 1);
+	line.erase(0, barLocation + 1); //erase height
+}
 
-	barLocation = line.find("|");
+void FindAward(ofstream &fout, string &line)
+{
+	int barLocation = line.find("|"); // Find award
 	string award = line.substr(0, barLocation);
+
 	fout << "<br>Award: <b>$" << award << "</b>\n";
 
-	//erase award
-	line.erase(0, barLocation + 1);
+	line.erase(0, barLocation + 1);	//erase award
+}
 
+void FindCrimes(ofstream &fout, string &line)
+{
+	int comma;
 	fout << "<br>Crimes:\n<ol>\n";
-
 	do
 	{
-		comma = line.find(","); 	//Look for the first comma
+		//Look for the first comma
+		comma = line.find(","); 
 
-		string crime = line.substr(0, comma); 	//Pull out the string before the comma
+		//Pull out the string before the comma
+		string crime = line.substr(0, comma); 
 
 		//Output the crime
 		fout << "  <li>" << crime << "</li>\n";
 
-		//erase this crime
+		//delete crime from line, repeat until EOS
 		line.erase(0, comma + 1);
 
 	} while (comma != string::npos);
 
 	fout << "</ol>\n";
+}
 
-	//delete crime from line, repeat until EOS
+void PrintCriminal(ofstream &fout, string line)
+{
+	FindName(fout, line); // Get name
+	FindGender(fout, line); // Get gender
+	FindHeight(fout, line); // Get height
+	FindCrimes(fout, line); // Get all crimes
 }
 
 void main()
@@ -99,12 +108,11 @@ void main()
 	// For each line in criminals.txt
 	while (!fin.eof())
 	{
-		//Call PrintCriminal with the line
+		// Call PrintCriminal with the line
 		PrintCriminal(fout, line);
 		fout << "</p>";
 		getline(fin, line);
 	}
-
 	// Close both files
 	fout.close();
 	fin.close();
